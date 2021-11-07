@@ -1,5 +1,4 @@
 const { merge } = require('webpack-merge');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const common = require('./webpack.common.js');
 
@@ -7,15 +6,23 @@ module.exports = merge(common, {
   mode: 'production',
   devtool: 'hidden-source-map',
   output: {
-    filename: 'bundles/[name].[hash].bundle.js',
+    filename: 'bundles/[name].[contenthash].bundle.js',
   },
   module: {
     rules: [],
   },
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  },
   optimization: {
+    moduleIds: 'deterministic',
+    runtimeChunk: {
+      name: 'manifest',
+    },
     splitChunks: {
       cacheGroups: {
-        commons: {
+        vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks: 'all',
@@ -23,5 +30,4 @@ module.exports = merge(common, {
       },
     },
   },
-  plugins: [new BundleAnalyzerPlugin()],
 });

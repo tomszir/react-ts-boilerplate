@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Home from './routes/Home';
+import Home from './pages/Home/HomeLazy';
 
 function App() {
   return (
